@@ -1,6 +1,6 @@
 **Oreum Industries**
 
-# Oreum Copula `oreum_copula`
+# Oreum Copula Modelling `oreum_copula`
 
 Examples of Bayesian linear models with copula-based covariance using pymc3.
 Primarily for use on client projects.
