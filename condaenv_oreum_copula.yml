@@ -1,0 +1,11 @@
+name: oreum_copula
+channels:
+- defaults
+dependencies:
+- ipython==7.26.*
+- jupyterlab==3.1.*
+- mkl==2021.3.*
+- mkl-service==2.4.*
+- pip==21.2.*
+- python==3.9.*
+- conda-forge::watermark==2.2.*
