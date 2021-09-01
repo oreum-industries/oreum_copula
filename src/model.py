@@ -18,13 +18,18 @@ class ModelA(model.BasePYMC3Model):
             b. zero-inflated marginals
             c. missing data
 
-        2. This model does not contain a conventional pymc3 likelihood object
-            for observations e.g. `cop_like = pm.Normal(..., observed=cop_obs)`
-            or `cop_like = pm.MvNormal(..., observed=cop_obs)`. 
-            This is a design decision because during intial development that 
-            observation style threw errors.
-            Instead it uses a Potential on a defined distribution e.g.
-            `cop_like = pm.Potential(..., cop_dist.logp(y_cop))`
+        2. This model doesn't contain a conventional pymc3 likelihood object for
+            observations: 
+                e.g. `cop_like = pm.MvNormal(..., observed=cop_obs)`. 
+            a. This is a design decision because during intial development that 
+                observation style threw errors, seemingly because RVs are in the 
+                likelihood. In this case `pm.sample_posterior_predictive` also 
+                explicitly cannot run.
+            b. Instead we use a Potential on a defined distribution: 
+                e.g. `cop_like = pm.Potential(..., cop_dist.logp(y_cop))`.
+                In this case `observed_RVs` contains no nodes, and whilst 
+                `pm.sample_posterior_predictive` will technically run, 
+                there will be no values estimated.
 
         3. Shapes are different throughout the model when using intercept-only:
             (n, j) becomes (n, ) when j=1
@@ -41,9 +46,9 @@ class ModelA(model.BasePYMC3Model):
             each arranged as: pd.DataFrame(mx_en, mx_exs) """
         super().__init__(*args, **kwargs)
         
-        self.sample_kws['init'] = 'adapt_diag'  # sensitve startpos avoid jitter
-        self.sample_kws['tune'] = 2000          # tune more than the base
-        self.sample_kws['target_accept'] = 0.80 # set > 0.8 to tame divergences
+        self.sample_kws['init'] = 'adapt_diag'   # senstve startpos avoid jitter
+        self.sample_kws['tune'] = 2000           # tune more than the base
+        self.sample_kws['target_accept'] = 0.80  # set > 0.8 to tame divergences
        
         self.obs_m1 = obs_m1
         self.cords_m1 = {'names_j_m1': np.array(['intercept']),
@@ -69,12 +74,12 @@ class ModelA(model.BasePYMC3Model):
             ### Create marginals, parameterised to obs (intercept-only)
             m1_b = pm.Normal('m1_b', mu=0., sigma=1.)
             m1_mu = tt.dot(m1_b, x_m1.T)
-            m1_sigma = pm.InverseGamma('m1_sigma', alpha=11., beta=10.)
+            m1_sigma = pm.InverseGamma('m1_sigma', alpha=11., beta=4.)
             m1_dist = model.Lognormal.dist(mu=m1_mu, sigma=m1_sigma)
 
             m2_b = pm.Normal('m2_b', mu=0., sigma=1.)
             m2_mu = tt.dot(m2_b, x_m2.T)
-            m2_sigma = pm.InverseGamma('m2_sigma', alpha=11., beta=10.)
+            m2_sigma = pm.InverseGamma('m2_sigma', alpha=11., beta=15.)
             m2_dist = model.Lognormal.dist(mu=m2_mu, sigma=m2_sigma)
        
             ### Transform obs marginals to uniform through marginal CDFs
