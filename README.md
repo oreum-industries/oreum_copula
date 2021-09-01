@@ -18,7 +18,7 @@ Notes:
 # 1. Manual Installation
 
 This project is intended for interactive development and execution.
-As at 2021-08-31, the project is manually installed on MacOS: it may be 
+As at 2021-08-31, the project is manually installed on MacOS: it may be
 automated in future.
 
 ## 1.1 Pre-req: Continuum Anaconda Python 3.8.* 64bit
