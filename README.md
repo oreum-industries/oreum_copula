@@ -63,7 +63,15 @@ Note this includes `oreum_core` which contains several package dependencies.
 $> ./pip_install.sh
 ```
 
-#### 1.3.3 Optional jupyterlab extensions
+#### 1.3.3 Install graphviz to local system, OS dependent
+
+e.g. for MacOS:
+
+```zsh
+brew install graphviz
+```
+
+#### 1.3.4 Optional jupyterlab extensions
 
 ```zsh
 $> ./jupyter_install.sh
@@ -128,26 +136,32 @@ $> python -c "import numpy as np; np.__config__.show()"
 Example output...
 
 ```zsh
-blas_mkl_info:
-    libraries = ['mkl_rt', 'pthread']
+blas_info:
+    libraries = ['cblas', 'blas', 'cblas', 'blas']
     library_dirs = ['/Users/jon/opt/anaconda3/envs/oreum_copula/lib']
-    define_macros = [('SCIPY_MKL_H', None), ('HAVE_CBLAS', None)]
     include_dirs = ['/Users/jon/opt/anaconda3/envs/oreum_copula/include']
+    language = c
+    define_macros = [('HAVE_CBLAS', None)]
 blas_opt_info:
-    libraries = ['mkl_rt', 'pthread']
+    define_macros = [('NO_ATLAS_INFO', 1), ('HAVE_CBLAS', None)]
+    libraries = ['cblas', 'blas', 'cblas', 'blas']
     library_dirs = ['/Users/jon/opt/anaconda3/envs/oreum_copula/lib']
-    define_macros = [('SCIPY_MKL_H', None), ('HAVE_CBLAS', None)]
     include_dirs = ['/Users/jon/opt/anaconda3/envs/oreum_copula/include']
-lapack_mkl_info:
-    libraries = ['mkl_rt', 'pthread']
+    language = c
+lapack_info:
+    libraries = ['lapack', 'blas', 'lapack', 'blas']
     library_dirs = ['/Users/jon/opt/anaconda3/envs/oreum_copula/lib']
-    define_macros = [('SCIPY_MKL_H', None), ('HAVE_CBLAS', None)]
-    include_dirs = ['/Users/jon/opt/anaconda3/envs/oreum_copula/include']
+    language = f77
 lapack_opt_info:
-    libraries = ['mkl_rt', 'pthread']
+    libraries = ['lapack', 'blas', 'lapack', 'blas', 'cblas', 'blas', 'cblas', 'blas']
     library_dirs = ['/Users/jon/opt/anaconda3/envs/oreum_copula/lib']
-    define_macros = [('SCIPY_MKL_H', None), ('HAVE_CBLAS', None)]
+    language = c
+    define_macros = [('NO_ATLAS_INFO', 1), ('HAVE_CBLAS', None)]
     include_dirs = ['/Users/jon/opt/anaconda3/envs/oreum_copula/include']
+Supported SIMD extensions in this NumPy install:
+    baseline = SSE,SSE2,SSE3
+    found = SSSE3,SSE41,POPCNT,SSE42,AVX,F16C,FMA3,AVX2,AVX512F,AVX512CD,AVX512_SKX,AVX512_CLX,AVX512_CNL,AVX512_ICL
+    not found = AVX512_KNL
 ```
 
 ### 3.1.2 numpy

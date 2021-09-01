@@ -6,6 +6,7 @@ dependencies:
 - jupyterlab==3.1.*
 - mkl==2021.3.*
 - mkl-service==2.4.*
+- numpy==1.21.*     # note installing here to ensure we get the Intel MKL BLAS
 - pip==21.2.*
 - python==3.9.*
 - conda-forge::watermark==2.2.*
