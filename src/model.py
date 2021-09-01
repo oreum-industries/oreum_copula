@@ -47,8 +47,8 @@ class ModelA(model.BasePYMC3Model):
         super().__init__(*args, **kwargs)
         
         self.sample_kws['init'] = 'adapt_diag'   # senstve startpos avoid jitter
-        self.sample_kws['tune'] = 2000           # tune more than the base
-        self.sample_kws['target_accept'] = 0.80  # set > 0.8 to tame divergences
+        self.sample_kws['tune'] = 4000           # tune more than the base
+        self.sample_kws['target_accept'] = 0.82  # set > 0.8 to tame divergences
        
         self.obs_m1 = obs_m1
         self.cords_m1 = {'names_j_m1': np.array(['intercept']),
