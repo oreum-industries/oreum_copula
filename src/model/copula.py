@@ -1,7 +1,8 @@
-# src.model.model_a.py
+# src.model.copula.py
 # copyright 2024 Oreum OÜ
-"""Models in family ModelA"""
+"""Basic models in family copula"""
 
+import numpy as np
 import pandas as pd
 import pymc as pm
 import pytensor.tensor as pt
@@ -15,27 +16,47 @@ class ModelA0(mt.BasePYMCModel):
     Uses:
       + nD shape handling throughout for better readability
     Core components used from oreum_core.model.BasePYMCModel
-    As used by 100_Demo_ModelA0.ipynb
+    As used by 001_MRE_ModelA0.ipynb
     """
 
-    version = "1.0.0"
     name = "mdla0"
+    version = "1.1.0"
 
-    def __init__(self, obs_m0: pd.DataFrame, obs_m1: pd.DataFrame, *args, **kwargs):
+    def __init__(
+        self,
+        obs_m0: pd.DataFrame,
+        obs_m1: pd.DataFrame,
+        ft_en_m0: list,
+        factor_map_m0: dict,
+        ft_en_m1: list,
+        factor_map_m1: dict,
+        *args,
+        **kwargs,
+    ):
         """Expects 2 dfx dataframes for observations per marginal (obs_m0, obs_m1),
         each marginal arranged as: y ~ x, aka pd.concat((dfx_en, dfx_exs), axis=1)
         """
         super().__init__(*args, **kwargs)
-        self.sample_kws["target_accept"] = 0.80  # set > 0.8 to tame divergences
-        self.sample_kws["tune"] = 2000  # tune 2x more than default
+        self.obs_nm = kwargs.pop("obs_nm", "obs")
+        self.rng = np.random.default_rng(seed=self.rsd)
+        self.sample_kws.update(
+            dict(target_accept=0.80)  # set higher to avoid divergences
+        )
+        self.ft_en_m0 = ft_en_m0
+        self.ft_en_m1 = ft_en_m1
+        self.factor_map_m0 = factor_map_m0
+        self.factor_map_m1 = factor_map_m1
 
-        # data validity checks and set unchanging coords
+        # set obs, coords, and do data validity checks
         assert len(obs_m0) == len(obs_m1)
         self.obs_m0 = obs_m0.copy()
         self.obs_m1 = obs_m1.copy()
+        # setup coords with dict expansion and additional structural names
         self.coords = dict(
-            x0_nm=obs_m0.columns.drop(["m0"]).values,
-            x1_nm=obs_m1.columns.drop(["m1"]).values,
+            x0_nm=obs_m0.columns.drop(self.ft_en_m0).values,
+            x1_nm=obs_m1.columns.drop(self.ft_en_m1).values,
+            # x0_nm={k: list(d.keys()) for k, d in factor_map_m0.items()},
+            # x1_nm={k: list(d.keys()) for k, d in factor_map_m1.items()},
             s_nm=["s0", "s1"],
             y_nm=["y0", "y1"],
             yhat_nm=["yhat0", "yhat1"],
@@ -44,30 +65,32 @@ class ModelA0(mt.BasePYMCModel):
 
     def _build(self):
         """Builds and returns the model. Also sets self.model"""
-        self.coords_m = dict(oid=self.obs_m0.index.values)
+        self.coords.update(dict(oid=self.obs_m0.index.values))  # (i, )
         self.n = len(self.obs_m0)
-        y_r = pd.concat([self.obs_m0["m0"], self.obs_m1["m1"]], axis=1)
-        x0_r = self.obs_m0.drop("m0", axis=1)
-        x1_r = self.obs_m1.drop("m1", axis=1)
+        y_r = pd.concat(
+            [self.obs_m0[self.ft_en_m0], self.obs_m1[self.ft_en_m1]], axis=1
+        )
+        x0_r = self.obs_m0.drop(self.ft_en_m0, axis=1)
+        x1_r = self.obs_m1.drop(self.ft_en_m1, axis=1)
 
-        with pm.Model(coords=self.coords, coords_mutable=self.coords_m) as self.model:
-            # 0. Create MutableData containers for obs (Y, X)
-            y = pm.MutableData("y", y_r, dims=("oid", "y_nm"))
-            x0 = pm.MutableData("x0", x0_r, dims=("oid", "x0_nm"))
-            x1 = pm.MutableData("x1", x1_r, dims=("oid", "x1_nm"))
+        with pm.Model(coords=self.coords) as self.model:
+            # 0. Create (Mutable)Data containers for obs (Y, X)
+            y = pm.Data("y", y_r, dims=("oid", "y_nm"))
+            x0 = pm.Data("x0", x0_r, dims=("oid", "x0_nm"))
+            x1 = pm.Data("x1", x1_r, dims=("oid", "x1_nm"))
 
             # 1. Define Observed Y marginal lognormal dists, regressing on F(X)
-            m0_b = pm.Normal("m0_b", mu=0.0, sigma=1.0, dims="x0_nm")
-            m1_b = pm.Normal("m1_b", mu=0.0, sigma=1.0, dims="x1_nm")
-            m_mu = pt.stack([pt.dot(m0_b, x0.T), pt.dot(m1_b, x1.T)], axis=1)
-            m_s = pm.InverseGamma("m_s", alpha=5.0, beta=4.0, dims="s_nm")
+            b_m0 = pm.Normal("beta_m0", mu=0.0, sigma=1.0, dims="x0_nm")
+            b_m1 = pm.Normal("beta_m1", mu=0.0, sigma=1.0, dims="x1_nm")
+            mu = pt.stack([pt.dot(x0, b_m0.T), pt.dot(x1, b_m1.T)], axis=1)
+            s = pm.InverseGamma("sigma", alpha=5.0, beta=4.0, dims="s_nm")
 
             # 2. Evidence Observed Y against marginal PDFs
             _ = pm.LogNormal(
-                "yhat", mu=m_mu, sigma=m_s, observed=y, dims=("oid", "yhat_nm")
+                "yhat", mu=mu, sigma=s, observed=y, dims=("oid", "yhat_nm")
             )
 
-        self.rvs_marg = ["m0_b", "m1_b", "m_s"]
+        self.rvs_marg = ["sigma", "beta_m0", "beta_m1"]
         self.rvs_ppc = ["yhat"]
 
         return self.model
