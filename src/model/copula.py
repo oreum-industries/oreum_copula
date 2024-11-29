@@ -22,8 +22,15 @@ class ModelA0(mt.BasePYMCModel):
     name = "mdla0"
     version = "1.3.0"
 
-    def __init__(self, obsd: dict, dfx_creatord: dict, *args, **kwargs):
-        """Expects `obsd` dict as {m0: obs_m0, m1: obs_m1}, each obs arranged as:
+    def __init__(
+        self,
+        obs_m0: pd.DataFrame,
+        obs_m1: pd.DataFrame,
+        dfx_creatord: dict,
+        *args,
+        **kwargs,
+    ):
+        """Expects 2 dataframes for obs, each arranged as:
             y ~ x, aka pd.concat((dfx_en, dfx_exs), axis=1)
         Also expects `dfx_creatord` dict as {m0: dfx_creator, ...}
         """
@@ -35,8 +42,8 @@ class ModelA0(mt.BasePYMCModel):
         )
 
         # set obs, coords, and do data validity checks
-        self.obs_m0 = obsd["m0"].copy()
-        self.obs_m1 = obsd["m1"].copy()
+        self.obs_m0 = obs_m0.copy()
+        self.obs_m1 = obs_m1.copy()
         assert len(self.obs_m0) == len(self.obs_m1)
         self.ft_en_m0 = dfx_creatord["m0"].ft_en
         self.ft_en_m1 = dfx_creatord["m1"].ft_en
