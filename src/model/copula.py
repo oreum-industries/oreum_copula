@@ -20,21 +20,12 @@ class ModelA0(mt.BasePYMCModel):
     """
 
     name = "mdla0"
-    version = "1.2.0"
+    version = "1.3.0"
 
-    def __init__(
-        self,
-        obs_m0: pd.DataFrame,
-        obs_m1: pd.DataFrame,
-        ft_en_m0: list,
-        factor_map_m0: dict,
-        ft_en_m1: list,
-        factor_map_m1: dict,
-        *args,
-        **kwargs,
-    ):
-        """Expects 2 dfx dataframes for observations per marginal (obs_m0, obs_m1),
-        each marginal arranged as: y ~ x, aka pd.concat((dfx_en, dfx_exs), axis=1)
+    def __init__(self, obsd: dict, dfx_creatord: dict, *args, **kwargs):
+        """Expects `obsd` dict as {m0: obs_m0, m1: obs_m1}, each obs arranged as:
+            y ~ x, aka pd.concat((dfx_en, dfx_exs), axis=1)
+        Also expects `dfx_creatord` dict as {m0: dfx_creator, ...}
         """
         super().__init__(*args, **kwargs)
         self.obs_nm = kwargs.pop("obs_nm", "obs")
@@ -42,19 +33,19 @@ class ModelA0(mt.BasePYMCModel):
         self.sample_kws.update(
             dict(target_accept=0.80)  # set higher to avoid divergences
         )
-        self.ft_en_m0 = ft_en_m0
-        self.ft_en_m1 = ft_en_m1
-        self.factor_map_m0 = factor_map_m0
-        self.factor_map_m1 = factor_map_m1
 
         # set obs, coords, and do data validity checks
-        assert len(obs_m0) == len(obs_m1)
-        self.obs_m0 = obs_m0.copy()
-        self.obs_m1 = obs_m1.copy()
+        self.obs_m0 = obsd["m0"].copy()
+        self.obs_m1 = obsd["m1"].copy()
+        assert len(self.obs_m0) == len(self.obs_m1)
+        self.ft_en_m0 = dfx_creatord["m0"].ft_en
+        self.ft_en_m1 = dfx_creatord["m1"].ft_en
+        self.factor_map_m0 = dfx_creatord["m0"].factor_map
+        self.factor_map_m1 = dfx_creatord["m0"].factor_map
         # setup coords with dict expansion and additional structural names
         self.coords = dict(
-            x0_nm=obs_m0.columns.drop(self.ft_en_m0).values,
-            x1_nm=obs_m1.columns.drop(self.ft_en_m1).values,
+            x0_nm=self.obs_m0.columns.drop(self.ft_en_m0).values,
+            x1_nm=self.obs_m1.columns.drop(self.ft_en_m1).values,
             # x0_nm={k: list(d.keys()) for k, d in factor_map_m0.items()},
             # x1_nm={k: list(d.keys()) for k, d in factor_map_m1.items()},
             s_nm=["s0", "s1"],
