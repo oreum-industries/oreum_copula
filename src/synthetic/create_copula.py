@@ -13,6 +13,7 @@ class CopulaBuilder:
     2. Transform to uniform (`u0, u1`) ->
     3. Transform to marginals (`m0, m1`)
     4. Also for comparison, create marginals (`m0x`, `m1x`) without copula
+    5. Create simple index for oid
     NOTE:
         + Currently copula is MvN
         + Currently marginals are both LogNormal
@@ -20,7 +21,7 @@ class CopulaBuilder:
         + We will attempt to recover these later using a copula model
     """
 
-    version = "0.2.0"
+    version = "0.3.0"
     rsd = 42
     rng = np.random.default_rng(seed=rsd)
 
@@ -87,5 +88,9 @@ class CopulaBuilder:
         )
         df["m0x"] = self.m0_dist.ppf(df["u0x"])
         df["m1x"] = self.m1_dist.ppf(df["u1x"])
+
+        # 5. Create oid
+        df["oid"] = [f"i{str(i).zfill(3)}" for i in range(len(df))]
+        df.set_index("oid", inplace=True)
 
         return df
