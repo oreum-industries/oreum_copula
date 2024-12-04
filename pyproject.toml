@@ -1,6 +1,6 @@
 [project]
 name = "oreum_copula"
-version = "1.0.0"
+version = "1.1.0"
 description = "Oreum Industries Copula Example"
 readme = "README.md"
 license = {file = "LICENSE.md"}
@@ -44,7 +44,7 @@ dev = [
 ]
 # NOTE: separated out to allow Makefile dev to get from pypi (dev-js gets local)
 oreum_core_pypi = [
-    "oreum_core[pymc]>=0.9.9",  # the latest package using osx-arm64 Accelerate
+    "oreum_core[pymc]>=0.9.10",  # the latest package using osx-arm64 Accelerate
 ]
 plotly = [
     "plotly",
