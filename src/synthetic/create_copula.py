@@ -37,6 +37,11 @@ class CopulaBuilder:
             mean=np.zeros(2), cov=self.ref_vals["c_cov"], seed=self.rng
         )
 
+        self.cx_dist = stats.norm(
+            loc=np.zeros(2),
+            scale=np.ones(2),  # seed=self.rng
+        )
+
     def create(
         self, nobs: int = 200, m0_params: dict = None, m1_params: dict = None
     ) -> tuple[pd.DataFrame, tuple]:
@@ -76,12 +81,22 @@ class CopulaBuilder:
         df["m0"] = self.m0_dist.ppf(df["u0"])
         df["m1"] = self.m1_dist.ppf(df["u1"])
 
-        # 4. Also create obs from the same marginals via uniform w/out copula
+        # 4. Also create uncorrelated obs using the same workflow (no copula)
         df = pd.concat(
             [
                 df,
                 pd.DataFrame(
-                    self.rng.uniform(size=(2, nobs)).T, columns=["u0x", "u1x"]
+                    self.cx_dist.rvs(size=(nobs, 2), random_state=42),
+                    columns=["c0x", "c1x"],
+                ),
+            ],
+            axis=1,
+        )
+        df = pd.concat(
+            [
+                df,
+                pd.DataFrame(
+                    stats.norm.cdf(df[["c0x", "c1x"]]), columns=["u0x", "u1x"]
                 ),
             ],
             axis=1,
@@ -89,7 +104,7 @@ class CopulaBuilder:
         df["m0x"] = self.m0_dist.ppf(df["u0x"])
         df["m1x"] = self.m1_dist.ppf(df["u1x"])
 
-        # 5. Create oid
+        # 5. Create index oid
         df["oid"] = [f"i{str(i).zfill(3)}" for i in range(len(df))]
         df.set_index("oid", inplace=True)
 
