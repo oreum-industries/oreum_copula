@@ -13,7 +13,7 @@ c = get_config()
 
 c.NbConvertApp.export_format = "slides"
 c.FilesWriter.build_directory = "renders"  # output-dir
-c.NbConvertApp.notebooks = ["000_Overview.ipynb"]
+c.NbConvertApp.notebooks = ["000_Intro.ipynb"]
 c.SlidesExporter.embed_images = True  # True! otherwise uses stupid image links
 c.SlidesExporter.exclude_input = True
 c.SlidesExporter.exclude_input_prompt = True
