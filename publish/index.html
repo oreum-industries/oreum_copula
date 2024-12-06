@@ -8464,18 +8464,28 @@ using a copula and a sophisticated model architecture.</p>
 </div>
 </div>
 </div>
-</div></div><div class="fragment">
+</div></div></section></section><section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Next-Steps">Next Steps<a class="anchor-link" href="#Next-Steps">¶</a></h3><p>Now the interested reader should dig into the Notebooks in project reference
+<a href="https://github.com/oreum-industries/oreum_copula"><code>oreum_copula</code></a></p>
+<p>There we demonstrate the full E2E workflow for models of increasing sophistication,
+including several state-of-the-art methods unavailable to conventional
+max-likelihood / machine-learning models.</p>
+<ul>
+<li><code>100_ModelA0.ipynb</code>: Core (naive) architecture: Create priors, marginal likelihoods, but no copula</li>
+<li><code>101_ModelA1.ipynb</code>: Partial architecture (extends ModelA0): Include Gaussian copula (w/ Jacobian adjustment), and several technical innovations to let <code>pymc</code> work with the transformations</li>
+<li><code>102_ModelA2.ipynb</code>: Full architecture (extends ModelA1): Include Jacobian Adjustment on transformed observations</li>
+</ul>
 <hr/>
-<p><strong>Oreum OÜ © 2024</strong></p>
+<p><strong>Oreum Industries © 2024</strong></p>
 </div>
 </div>
 </div>
-</div></div></section></section>
+</div></section></section>
 </div>
 </div>
 </main>
