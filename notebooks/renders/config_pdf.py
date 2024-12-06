@@ -6,7 +6,7 @@
 c = get_config()
 c.NbConvertApp.export_format = "pdf"
 c.FilesWriter.build_directory = "renders"  # output-dir
-c.NbConvertApp.notebooks = ["000_Overview.ipynb"]
+c.NbConvertApp.notebooks = ["000_Intro.ipynb"]
 c.PDFExporter.exclude_input_prompt = True
 c.PDFExporter.exclude_output_prompt = True
 c.PDFExporter.latex_count = 3

@@ -1,6 +1,6 @@
 # src.model.copula.py
 # copyright 2024 Oreum OÜ
-"""Basic models in family copula"""
+"""Basic models in Copula family"""
 
 import numpy as np
 import pandas as pd

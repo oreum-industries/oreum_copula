@@ -323,7 +323,7 @@ From inside the `notebooks/` dir, run:
 
 ```sh
 $> jupyter nbconvert --config renders/config_pdf.py
-$> jupyter nbconvert --config renders/config_slides.py
+$> jupyter nbconvert --config renders/config_slides.py --post serve
 ```
 
 ### 4.4 Archived Notebooks

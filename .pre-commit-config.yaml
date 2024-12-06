@@ -7,7 +7,7 @@ repos:
     rev: v5.0.0
     hooks:
       - id: check-added-large-files
-        args: ['--maxkb=1024']
+        args: ['--maxkb=4096']
         exclude: "([a-zA-Z0-9_]{1,}\\.ipynb|.+?\\.png)"
       - id: check-merge-conflict
       - id: check-toml
