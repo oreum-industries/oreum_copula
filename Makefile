@@ -3,10 +3,10 @@
 # + Intended for install on MacOS Apple Silicon arm64 using Accelerate
 #   (NOT Intel x86 using MKL via Rosetta 2)
 # + Uses sh by default: to confirm shell create a recipe with $(info $(SHELL))
-.PHONY: dev dev-js lint help install-env install-mamba test-dev-env tlmgr\
-		uninstall-env uninstall-mamba
-.SILENT: dev dev-js lint help install-env install-mamba test-dev-env tlmgr\
-		uninstall-env uninstall-mamba
+.PHONY: dev dev-js lint help install-env install-mamba slides test-dev-env\
+		tlmgr uninstall-env uninstall-mamba
+.SILENT: dev dev-js lint help install-env install-mamba slides test-dev-env\
+		tlmgr uninstall-env uninstall-mamba
 MAMBADL := https://github.com/conda-forge/miniforge/releases/download/23.3.1-1
 MAMBAV := Miniforge3-MacOSX-arm64.sh
 MAMBARCMSG := Please create file $(MAMBARC), importantly set `platform: osx-arm64`
@@ -86,6 +86,7 @@ lint: ## run code linters and static security (checks only)
 	ruff check --diff
 	ruff format --no-cache --diff
 
+
 slides: ## render slides (and pdf) and place in publish/ dir
 	export PATH=$(MAMBADIR)/envs/oreum_copula/bin:$$PATH; \
 		export CONDA_ENV_PATH=$(MAMBADIR)/envs/oreum_copula/bin; \
@@ -93,8 +94,9 @@ slides: ## render slides (and pdf) and place in publish/ dir
 		cd notebooks; \
 		jupyter nbconvert --config renders/config_slides.py; \
 		jupyter nbconvert --config renders/config_pdf.py
-	cp notebooks/renders/000_Intro.slides.html publish/index.html
+	mv notebooks/renders/000_Intro.slides.html publish/index.html
 	cp notebooks/renders/000_Intro.pdf publish/
+
 
 test-dev-env:  ## test the dev machine install of critial numeric packages
 	export PATH=$(MAMBADIR)/bin:$$PATH; \
