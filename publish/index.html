@@ -7503,8 +7503,8 @@ of ignoring the covariance is substantial.</li>
 <li>We create a series of principled copula models using advanced architectures and Bayesian inference to fit to the
 data and estimate the covariance on $M_{0}, M_{1}$</li>
 <li>The first model is naive and ignores the covariance, the final model is very sophisticated and estimates the covariance</li>
-<li><strong>We demonstrate a substantial 32 percentage-point improvement in model accuracy when using a copula-based model</strong></li>
-<li>This estimation could make or break a portfolio!</li>
+<li>We demonstrate <strong>a substantial 32 percentage-point improvement in model accuracy</strong> when using a copula-based model</li>
+<li>This correct estimation would likely make the difference between profitable pricing / accurate reserving, or greatly loss-making business over a portfolio.</li>
 </ul>
 </li>
 </ul>
@@ -7788,7 +7788,7 @@ statistical inferences, model evaluation and comparison, and more.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>We can learn a lot by creating a synthetic copula dataset using a "forward-pass":</p>
 <ol>
-<li><p>Start with random data $C$ sampled from the PDF of a latent copula function $\square_{\mathfrak{C}}$ with 2-dimensions
+<li><p>Start with random data $C$ sampled from the PDF of a Latent Copula function $\square_{\mathfrak{C}}$ with 2-dimensions
 $$(C_{0}, C_{1}) \sim \square_{\mathfrak{C}}$$</p>
 </li>
 <li><p>Transform each dimension of the coupled data through the CDF of the copula function $\Phi_{\mathfrak{C}}$ to yield
@@ -7840,7 +7840,7 @@ of a 2-dimensional Multivariate Normal distribution with covariance $\Sigma$</p>
             &amp;\sim \text{MultivariateNormal}(\mu, \Sigma, \text{shape}=2)
 \end{aligned}
 $$</p>
-<p>This forms our latent Gaussian copula, and this is where we could get creative and use any number of alternative
+<p>This forms our Latent Copula (a Gaussian), and this is where we could get creative and use any number of alternative
 copula functions from the literature (e.g. Clayton, Frank, Gumbel, etc) or even create our own: the copula marginals
 dont have to be the same distribution</p>
 </div>
@@ -8066,7 +8066,7 @@ $$</p>
 <p><strong>Observe</strong></p>
 <ul>
 <li>The marginals look almost identical, but the joint distribution is very different</li>
-<li>We might say <em>"so what?"</em> because we can always jointplot our marginals $M$ and se that there is correlation</li>
+<li>We might say <em>"so what?"</em> because we can always jointplot our marginals $M$ and see that there is correlation</li>
 <li>The huge impact is that these lead to a very different <strong>joint product</strong> $y$...</li>
 </ul>
 </div>
@@ -8323,7 +8323,7 @@ show the plate notation of the model.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="2.2-Compare-Estimated-$%5Chat%7By%7D$-ModelA0-vs-Model20">2.2 Compare Estimated $\hat{y}$ <code>ModelA0</code> vs <code>Model20</code><a class="anchor-link" href="#2.2-Compare-Estimated-$%5Chat%7By%7D$-ModelA0-vs-Model20">¶</a></h2>
+<h2 id="2.2-Compare-Estimated-$%5Chat%7By%7D$-ModelA0-vs-ModelA2">2.2 Compare Estimated $\hat{y}$ <code>ModelA0</code> vs <code>ModelA2</code><a class="anchor-link" href="#2.2-Compare-Estimated-$%5Chat%7By%7D$-ModelA0-vs-ModelA2">¶</a></h2>
 </div>
 </div>
 </div>
