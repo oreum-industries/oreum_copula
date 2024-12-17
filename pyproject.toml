@@ -46,10 +46,6 @@ dev = [
 oreum_core_pypi = [
     "oreum_core[pymc]>=0.9.10",  # the latest package using osx-arm64 Accelerate
 ]
-plotly = [
-    "plotly",
-    "kaleido",
-]
 
 [project.urls]
 homepage = "https://github.com/oreum-industries/oreum_copula"
