@@ -1,4 +1,5 @@
 # config_slides.py
+# per https://nbconvert.readthedocs.io/en/latest/config_options.html
 # gets used alongside ~/.jupyter/jupyter_nbconvert_config.py
 # which you can create from this dir as `$> jupyter nbconvert --generate-config`
 # run this from inside notebooks/ dir:
