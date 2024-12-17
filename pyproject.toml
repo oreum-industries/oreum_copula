@@ -38,6 +38,7 @@ dev = [
     "interrogate",
     "pipdeptree",
     "pip-licenses",
+    "playwright",
     "pre-commit",
     "pytest",
     "ruff"
