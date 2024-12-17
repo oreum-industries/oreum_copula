@@ -87,15 +87,15 @@ lint: ## run code linters and static security (checks only)
 	ruff format --no-cache --diff
 
 
-slides: ## render slides (and pdf) and place in publish/ dir
+slides: ## render slides (and webpdf) and place in publish/ dir
 	export PATH=$(MAMBADIR)/envs/oreum_copula/bin:$$PATH; \
 		export CONDA_ENV_PATH=$(MAMBADIR)/envs/oreum_copula/bin; \
 		export CONDA_DEFAULT_ENV=oreum_copula; \
 		cd notebooks; \
 		jupyter nbconvert --config renders/config_slides.py; \
-		jupyter nbconvert --config renders/config_pdf.py
+		jupyter nbconvert --config renders/config_webpdf.py
 	mv notebooks/renders/000_Intro.slides.html publish/index.html
-	cp notebooks/renders/000_Intro.pdf publish/
+	mv notebooks/renders/000_Intro.pdf publish/
 
 
 test-dev-env:  ## test the dev machine install of critial numeric packages
