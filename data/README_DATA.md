@@ -114,4 +114,4 @@ Further note:
   prediction workflow, we may use the practice of a known Test/Holdout set.
 
 ---
-Oreum OÜ &copy; 2024
+Oreum Industries &copy; 2024

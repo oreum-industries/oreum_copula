@@ -1,5 +1,5 @@
 # src.model.copula.py
-# copyright 2024 Oreum OÜ
+# copyright 2024 Oreum Industries
 """Basic models in Copula family"""
 
 import numpy as np
@@ -265,9 +265,9 @@ class ModelA2(mt.BasePYMCModel):
         self.sample_kws.update(dict(target_accept=0.80))
 
         # set obs, coords, and do data validity checks
+        assert len(obs_m0) == len(obs_m1)
         self.obs_m0 = obs_m0.copy()
         self.obs_m1 = obs_m1.copy()
-        assert len(self.obs_m0) == len(self.obs_m1)
         self.ft_en_m0 = dfx_creatord["m0"].ft_en
         self.ft_en_m1 = dfx_creatord["m1"].ft_en
         self.factor_map_m0 = dfx_creatord["m0"].factor_map
@@ -346,7 +346,7 @@ class ModelA2(mt.BasePYMCModel):
             )
 
             # 8. Post-process for forward / PPC estimation: create marginals mhat
-            # and joint product yhat.
+            # and joint product mhat.
             # This allows `sample_prior_predictive`, `sample_posterior_predictive`,
             # and overcomes issue: "UserWarning: The effect of Potentials on
             # other parameters is ignored during prior predictive sampling."
@@ -370,9 +370,9 @@ class ModelA2(mt.BasePYMCModel):
 
         self.rvs_marg = ["sigma", "beta_m0", "beta_m1"]
         self.rvs_lkjcc = ["lkjcc"]
+        self.rvs_unobs = self.rvs_marg + self.rvs_lkjcc
         self.rvs_pot = ["pot_chat", "pot_mhat", "pot_jcd_c"]
         self.rvs_det = ["u", "c", "yhat", "lkjcc_stds", "lkjcc_corr"]
-        self.rvs_unobs = self.rvs_marg + self.rvs_lkjcc
         self.rvs_ppc = ["mhat"]
 
         return self.model

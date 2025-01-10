@@ -45,7 +45,7 @@ dev = [
 ]
 # NOTE: separated out to allow Makefile dev to get from pypi (dev-js gets local)
 oreum_core_pypi = [
-    "oreum_core[pymc]>=0.9.10",  # the latest package using osx-arm64 Accelerate
+    "oreum_core[pymc]>=0.9.11",  # the latest package using osx-arm64 Accelerate
 ]
 
 [project.urls]
