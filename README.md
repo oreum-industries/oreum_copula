@@ -431,11 +431,9 @@ We aim to make this project usable by all (developer, statistician, biz):
 
 ---
 
-Copyright 2022 Oreum Industries t/a Oreum Industries. All rights reserved.
-See LICENSE.md.
-
-Oreum Industries t/a Oreum Industries, Sepapaja 6, Tallinn, 15551, Estonia,
-reg.16122291, [oreum.io](https://oreum.io)
+Copyright 2024 Oreum FZCO t/a Oreum Industries. Oreum FZCO, IFZA, Dubai Silicon
+Oasis, Dubai, UAE, reg. 25515. All rights reserved. See LICENSE.md
+[oreum.io](https://oreum.io)
 
 ---
 Oreum Industries &copy; 2024
