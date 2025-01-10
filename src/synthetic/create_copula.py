@@ -1,6 +1,6 @@
 # src.synthetic.create_copula.py
 """Create synthetic copula dataset"""
-# copyright 2023 Oreum OÜ
+# copyright 2023 Oreum Industries
 
 import numpy as np
 import pandas as pd

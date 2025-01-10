@@ -1,5 +1,5 @@
 # src.model.copula.py
-# copyright 2024 Oreum OÜ
+# copyright 2024 Oreum Industries
 """Basic models in Copula family"""
 
 import numpy as np

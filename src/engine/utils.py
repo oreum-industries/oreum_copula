@@ -1,5 +1,5 @@
 # src.engine.utils.py
-# copyright 2024 Oreum OÜ
+# copyright 2024 Oreum Industries
 """Assorted display and plotting utilities for the project"""
 
 import pandas as pd
