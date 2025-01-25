@@ -1,11 +1,11 @@
 [project]
 name = "oreum_copula"
-version = "1.1.0"
+version = "1.2.0"
 description = "Oreum Industries Copula Example"
 readme = "README.md"
 license = {file = "LICENSE.md"}
 authors = [{ name = "Jonathan Sedar", email = "jonathan.sedar@oreum.io" },]
-requires-python = "==3.11.*"
+requires-python = "==3.12.*"
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
@@ -17,7 +17,7 @@ classifiers = [
     "Private :: Do Not Upload",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Topic :: Scientific/Engineering",
     "Topic :: Scientific/Engineering :: Information Analysis",
     "Topic :: Scientific/Engineering :: Visualization",
@@ -39,13 +39,14 @@ dev = [
     "pipdeptree",
     "pip-licenses",
     "playwright",
+    "pooch",
     "pre-commit",
     "pytest",
     "ruff"
 ]
 # NOTE: separated out to allow Makefile dev to get from pypi (dev-js gets local)
 oreum_core_pypi = [
-    "oreum_core[pymc]>=0.9.11",  # the latest package using osx-arm64 Accelerate
+    "oreum_core[pymc]>=0.10.0",  # the latest package using osx-arm64 Accelerate
 ]
 
 [project.urls]
@@ -82,7 +83,7 @@ badge-style = "flat"
 [tool.ruff]  # settings: https://docs.astral.sh/ruff/settings/
 indent-width = 4
 line-length = 88
-target-version = "py311"
+target-version = "py312"
 extend-exclude = [
     "__pycache__",
     "build",

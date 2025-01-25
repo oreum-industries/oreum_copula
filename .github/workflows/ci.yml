@@ -8,6 +8,6 @@ jobs:
       - name: Set Up Basic Python Env
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.12'
       - name: Run Linter & Static Security Checks
         run: make lint

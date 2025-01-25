@@ -11,7 +11,7 @@ We evaluate the behaviour and performance of the models throughout the workflows
 including several state-of-the-art methods unavailable to conventional
 max-likelihood / machine-learning models.
 
-[![Python](https://img.shields.io/badge/python-3.11-blue)](https://www.python.org)
+[![Python](https://img.shields.io/badge/python-3.12-blue)](https://www.python.org)
 [![CI](https://github.com/oreum-industries/oreum_copula/workflows/ci/badge.svg)](https://github.com/oreum-industries/oreum_copula/actions/workflows/ci.yml)
 [![code style: ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![code style: interrogate](https://raw.githubusercontent.com/oreum-industries/oreum_copula/master/assets/img/interrogate_badge.svg)](https://pypi.org/project/interrogate/)
