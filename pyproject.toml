@@ -1,6 +1,6 @@
 [project]
 name = "oreum_copula"
-version = "1.2.0"
+version = "1.2.1"
 description = "Oreum Industries Copula Example"
 readme = "README.md"
 license = {file = "LICENSE.md"}
