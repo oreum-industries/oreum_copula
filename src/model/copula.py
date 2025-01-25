@@ -224,13 +224,18 @@ class ModelA1(mt.BasePYMCModel):
                 mt.lognormal_icdf(x=u_d, mu=mu, sigma=s),
                 dims=("oid", "mhat_nm"),
             )
+
+            # Create joint marginal product yhat.
+            # Sidenote pymc also puts yhat into posterior but we must ignore it,
+            # since it has the direct values of observed m, and is not made from
+            # mhat. We can get yhat from sample_posterior_predictive
             _ = pm.Deterministic("yhat", pm.math.prod(mhat, axis=1), dims="oid")
 
         self.rvs_marg = ["sigma", "beta_m0", "beta_m1"]
         self.rvs_lkjcc = ["lkjcc"]
-        self.rvs_pot = ["pot_chat", "pot_mhat"]
-        self.rvs_det = ["u", "c", "yhat", "lkjcc_stds", "lkjcc_corr"]
         self.rvs_unobs = self.rvs_marg + self.rvs_lkjcc
+        self.rvs_pot = ["pot_chat", "pot_mhat"]
+        self.rvs_det = ["u", "c", "lkjcc_stds", "lkjcc_corr", "yhat"]
         self.rvs_ppc = ["mhat"]
 
         return self.model
