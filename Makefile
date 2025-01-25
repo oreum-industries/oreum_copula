@@ -20,9 +20,6 @@ else
     PYTHON = $(PYTHON_DEFAULT)
 endif
 
-# export CONDA_ENV_PATH=$(MAMBADIR)/envs/oreum_copula/bin; \
-# export CONDA_DEFAULT_ENV=oreum_copula; \
-
 dev:  # create env for local dev
 	make install-env
 	export PATH=$(MAMBADIR)/envs/oreum_copula/bin:$$PATH; \
@@ -36,9 +33,6 @@ dev:  # create env for local dev
 		pip-licenses -saud -f markdown -i csv2md --output-file LICENSES_THIRD_PARTY.md; \
 		pre-commit install; \
 		pre-commit autoupdate;
-
-# export CONDA_ENV_PATH=$(MAMBADIR)/envs/oreum_copula/bin; \
-# export CONDA_DEFAULT_ENV=oreum_copula; \
 
 dev-js:  # create env for local dev alongside latest live oreum_core on JS machine
 	make install-env
@@ -62,7 +56,6 @@ help:
 	@echo "  test-dev-env  optional test local dev env numeric packages, v.slow"
 	@echo "  uninstall-env remove env (use from parent dir \make -C oreum_copula ...)"
 
-# export CONDA_SUBDIR=osx-arm64; \
 
 install-env:  ## create mamba (conda) environment
 	export PATH=$(MAMBADIR)/bin:$$PATH; \
@@ -89,9 +82,6 @@ lint: ## run code linters and static security (checks only)
 	bandit --config pyproject.toml -r src/
 	interrogate --config pyproject.toml src/
 
-# export CONDA_ENV_PATH=$(MAMBADIR)/envs/oreum_copula/bin; \
-# export CONDA_DEFAULT_ENV=oreum_copula; \
-
 slides: ## render slides (and webpdf) and place in publish/ dir
 	export PATH=$(MAMBADIR)/envs/oreum_copula/bin:$$PATH; \
 		export MAMBA_EXE='$(MAMBADIR)/bin/mamba'; \
@@ -101,10 +91,6 @@ slides: ## render slides (and webpdf) and place in publish/ dir
 		jupyter nbconvert --config renders/config_webpdf.py
 	mv notebooks/renders/000_Intro.slides.html publish/index.html
 	mv notebooks/renders/000_Intro.pdf publish/
-
-# export PATH=$(MAMBADIR)/envs/oreum_copula/bin:$$PATH; \
-# export CONDA_ENV_PATH=$(MAMBADIR)/envs/oreum_copula/bin; \
-# export CONDA_DEFAULT_ENV=oreum_copula; \
 
 
 test-dev-env:  ## test the dev machine install of critial numeric packages
