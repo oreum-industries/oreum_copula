@@ -8200,9 +8200,9 @@ $y^{\chi} = M^{\chi}_{0} \cdot M^{\chi}_{1}$ can become very different:</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p><strong>Observe:</strong></p>
 <p>If we imagine this to be a portfolio of $50$ policies, and the value of interest is an Expected Loss Cost
-$y == \mathbb{E}_{\text{loss}}$, and the units are dollars, then:</p>
+$y = \mathbb{E}_{\text{loss}}$, and the units are dollars, then:</p>
 <ul>
-<li>If we were to use a model that ignores covariance, we might get a portfolio estimate of $\mathbb{E}_{loss} \approx 200$ dollars
+<li>If we were to use a model that ignores covariance, we might get a portfolio estimate of $\mathbb{E}_{\text{loss}} \approx 200$ dollars
 <strong>higher</strong> than if we were to use a better model that handles covariance with a copula function</li>
 <li>This overestimate is a substantial $\frac{700}{500} \approx \mathbb{+40\%}$ and would likely make the difference between profitable
 pricing / accurate reserving, or greatly loss-making business over the portfolio.</li>
@@ -8270,6 +8270,7 @@ unavailable to conventional max-likelihood / machine-learning models.</p>
 $\hat{y} = \hat{M_{0}} \cdot \hat{M_{1}}$</li>
 <li>The simplest naive model (<code>ModelA0</code>) does not include a copula function, and the most sophisticated model <code>ModelA2</code> does</li>
 </ul>
+<p>...</p>
 </div>
 </div>
 </div>
