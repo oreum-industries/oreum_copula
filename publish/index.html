@@ -7493,12 +7493,11 @@ predictions for <code>expected loss cost</code> can be hugely wrong!</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Quick-Aside-on-decomposition-of-claims-frequency-and-severity">Quick Aside on decomposition of claims <code>frequency</code> and <code>severity</code><a class="anchor-link" href="#Quick-Aside-on-decomposition-of-claims-frequency-and-severity">¶</a></h3><p>We can create different decompositions for different purposes, and according to the data available. A very useful one is
-shown here: to use the ratio of losses per unit of TIV, and thus generalise to policies of different TIV.</p>
+<h3 id="Quick-Aside-on-decomposition-of-claims-frequency-and-severity">Quick Aside on decomposition of claims <code>frequency</code> and <code>severity</code><a class="anchor-link" href="#Quick-Aside-on-decomposition-of-claims-frequency-and-severity">¶</a></h3><p>We can create different decompositions for different purposes, and according to the data available. A useful one shown
+here is the ratio of losses per unit TIV, to generalise to policies of different TIV</p>
 <p>$$
 \begin{aligned}
-frq_{i} &amp;= \frac{claim\_ct_{i}}{TIV_{i}} \\
-sev_{i} &amp;= \frac{incurred\_total_{i}}{claim\_ct_{i}} \\
+frq_{i} &amp;= \frac{claim\_ct_{i}}{TIV_{i}} \ , &amp; sev_{i} &amp;= \frac{incurred\_total_{i}}{claim\_ct_{i}} \\
 \\
 \mathbb{E}_{\text{loss} \ i} &amp;= frq_{i} * sev_{i} = \frac{incurred\_total_{i}}{TIV_{i}} \\
 \end{aligned}
@@ -7508,7 +7507,7 @@ $$</p>
 <li>Each policy $i \in n$ (the dataset of all policies) can have it's own (policy-level) frequency ($frq_{i} \geq 0$) and
 severity ($sev_{i} \geq 0$) of claim (and thus policy-level $\mathbb{E}_{\text{loss i}} \geq 0$)</li>
 <li>Note $frq$ and $sev$ tend to be zero-augmented distributions (where no loss is experienced): this is a very important
-aspect to include in more advanced model architectures</li>
+aspect to include in real-world model architectures</li>
 <li>$claim\_ct_{i} \geq 0$ is the count of claims incurred for policy $i$</li>
 <li>$TIV_{i} \gt 0$ is the Total Insured Value (TIV) for policy $i$</li>
 <li>$incurred\_total_{i} \geq 0$ is the total incurred losses for policy $i$</li>
@@ -7516,7 +7515,28 @@ aspect to include in more advanced model architectures</li>
 </div>
 </div>
 </div>
-</div></section><section>
+</div><div class="fragment">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p><strong>Plug:</strong></p>
+<ul>
+<li><p>Oreum Industries is releasing a forecasting product <strong>Vulcan</strong> for DUA pricing &amp; portfolio management that takes 3 simple tables (policy,
+premium_transactions, claims_transactions) and outputs probabilistic forecasts of Expected Loss Cost at policy-level</p>
+</li>
+<li><p>At the heart of the solution is a holistic, principled, open-box Bayesian copula model (for covarying claims frq-sev) that runs
+quickly via API to integrate within modern data processing pipelines and dashboards</p>
+</li>
+<li><p>We incorporate underwriter expertise; create hierarchical generalised linear regression on business-relevant parameters with high cardinality;
+allow for zero-claims inflation; auto-impute missing data; and more generally allow for small noisy datasets typical of DUA business.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div></section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
