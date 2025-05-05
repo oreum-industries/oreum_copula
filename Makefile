@@ -28,6 +28,7 @@ dev:  # create env for local dev
 		$(PYTHON_ENV) -m pip index versions oreum_core; \
 		$(PYTHON_ENV) -m pip install ".[dev,oreum_core_pypi]"; \
 		$(PYTHON_ENV) -c "import numpy as np; np.__config__.show()" > dev/install_log/blas_info.txt; \
+		$(PYTHON_ENV) -m playwright install chromium;\
 		pipdeptree -a > dev/install_log/pipdeptree.txt; \
 		pipdeptree -a -r > dev/install_log/pipdeptree_rev.txt; \
 		pip-licenses -saud -f markdown -i csv2md --output-file LICENSES_THIRD_PARTY.md; \

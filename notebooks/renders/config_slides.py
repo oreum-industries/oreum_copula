@@ -23,8 +23,9 @@ c.SlidesExporter.reveal_number = "h"  # 'c/t'
 c.SlidesExporter.reveal_width = "1600"  #'1280'  # 1920
 c.SlidesExporter.reveal_height = "900"  # '720'  #'1080'
 c.SlidesExporter.reveal_scroll = False
-c.SlidesExporter.reveal_theme = "simple"  #'serif'
+c.SlidesExporter.reveal_theme = "simple"  # "solarized" # "simple"  # 'serif'
 c.SlidesExporter.reveal_transition = "slide"  # 'slide' # none fade convex concave zoom
 c.SlidesExporter.skip_svg_encoding = True
 # c.SlidesExporter.extra_template_basedirs = 'renders/templates/'
 # c.SlidesExporter.template_name = 'slides-oemplus'
+# --allow-chromium-download
